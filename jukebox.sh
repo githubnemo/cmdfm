@@ -116,7 +116,7 @@ getSongFromStyle() {
 play() {
 	streamUrl="$@?client_id=2cd0c4a7a6e5992167a4b09460d85ece"
 	mkfifo /tmp/mplayer-control &>/dev/null
-	mplayer -slave -quiet -input file=/tmp/mplayer-control $streamUrl &>/dev/null &
+	(mpv --slave-broken --quiet --input-file=/tmp/mplayer-control "$streamUrl" &>/dev/null ) &
 }
 
 # Usage function
@@ -196,7 +196,7 @@ main() {
 				[[ -z "${songInfo[8]}" ]] && descr="empty" || descr="${songInfo[8]}"
 
 				play $streamUrl #Streaming url
-				pidofMPlayer=$(pgrep mplayer)
+				pidofMPlayer=$(pgrep mpv)
 				if [[ -z $pidofMPlayer ]]; then
 					echo "Loading ..."
 					break 1
